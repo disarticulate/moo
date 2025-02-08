@@ -6,20 +6,20 @@ var hasSticky = typeof new RegExp().sticky === 'boolean'
 
 /***************************************************************************/
 
-export function isRegExp(o) { return o && toString.call(o) === '[object RegExp]' }
-export function isObject(o) { return o && typeof o === 'object' && !isRegExp(o) && !Array.isArray(o) }
+function isRegExp(o) { return o && toString.call(o) === '[object RegExp]' }
+function isObject(o) { return o && typeof o === 'object' && !isRegExp(o) && !Array.isArray(o) }
 
-export function reEscape(s) {
+function reEscape(s) {
   return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
 }
-export function reGroups(s) {
+function reGroups(s) {
   var re = new RegExp('|' + s)
   return re.exec('').length - 1
 }
-export function reCapture(s) {
+function reCapture(s) {
   return '(' + s + ')'
 }
-export function reUnion(regexps) {
+function reUnion(regexps) {
   if (!regexps.length) return '(?!)'
   var source =  regexps.map(function(s) {
     return "(?:" + s + ")"
@@ -27,7 +27,7 @@ export function reUnion(regexps) {
   return "(?:" + source + ")"
 }
 
-export function regexpOrLiteral(obj) {
+function regexpOrLiteral(obj) {
   if (typeof obj === 'string') {
     return '(?:' + reEscape(obj) + ')'
 
@@ -76,7 +76,7 @@ function lastNLines(string, numLines) {
   return string.substring(startPosition).split("\n")
 }
 
-export function objectToRules(object) {
+function objectToRules(object) {
   var keys = Object.getOwnPropertyNames(object)
   var result = []
   for (var i = 0; i < keys.length; i++) {
@@ -104,7 +104,7 @@ export function objectToRules(object) {
   return result
 }
 
-export function arrayToRules(array) {
+function arrayToRules(array) {
   var result = []
   for (var i = 0; i < array.length; i++) {
     var obj = array[i]
@@ -167,12 +167,12 @@ function ruleOptions(type, obj) {
   return options
 }
 
-export function toRules(spec) {
+function toRules(spec) {
   return Array.isArray(spec) ? arrayToRules(spec) : objectToRules(spec)
 }
 
 var defaultErrorRule = ruleOptions('error', {lineBreaks: true, shouldThrow: true})
-export function compileRules(rules, hasStates) {
+function compileRules(rules, hasStates) {
   var errorRule = null
   var fast = Object.create(null)
   var fastAllowed = true
@@ -284,12 +284,12 @@ export function compileRules(rules, hasStates) {
   return {regexp: combined, groups: groups, fast: fast, error: errorRule || defaultErrorRule}
 }
 
-export function compile(rules) {
+function compile(rules) {
   var result = compileRules(toRules(rules))
   return new Lexer({start: result}, 'start')
 }
 
-export function checkStateGroup(g, name, map) {
+function checkStateGroup(g, name, map) {
   var state = g && (g.push || g.next)
   if (state && !map[state]) {
     throw new Error("Missing state '" + state + "' (in token '" + g.defaultType + "' of state '" + name + "')")
@@ -298,7 +298,7 @@ export function checkStateGroup(g, name, map) {
     throw new Error("pop must be 1 (in token '" + g.defaultType + "' of state '" + name + "')")
   }
 }
-export function compileStates(states, start) {
+function compileStates(states, start) {
   var all = states.$all ? toRules(states.$all) : []
   delete states.$all
 
@@ -357,7 +357,7 @@ export function compileStates(states, start) {
   return new Lexer(map, start)
 }
 
-export function keywordTransform(map) {
+function keywordTransform(map) {
 
   // Use a JavaScript Map to map keywords to their corresponding token type
   // unless Map is unsupported, then fall back to using an Object:
@@ -460,7 +460,7 @@ Lexer.prototype._getGroup = function(match) {
   throw new Error('Cannot find token type for matched text')
 }
 
-export function tokenToString() {
+function tokenToString() {
   return this.value
 }
 
