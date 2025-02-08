@@ -620,7 +620,6 @@ Lexer.prototype.clone = function() {
 Lexer.prototype.has = function(tokenType) {
   return true
 }
-export { Lexer }
 export default {
   isRegExp, isObject, reEscape, reGroups, reCapture, reUnion, regexpOrLiteral, objectToRules, arrayToRules, ruleOptions, toRules,
  compileRules, defaultErrorRule, checkStateGroup, compileStates, keywordTransform, Lexer, tokenToString, compile
