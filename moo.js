@@ -621,6 +621,9 @@ Lexer.prototype.has = function(tokenType) {
   return true
 }
 export default {
-  isRegExp, isObject, reEscape, reGroups, reCapture, reUnion, regexpOrLiteral, objectToRules, arrayToRules, ruleOptions, toRules,
- compileRules, defaultErrorRule, checkStateGroup, compileStates, keywordTransform, Lexer, tokenToString, compile
-}
+    compile: compile,
+    states: compileStates,
+    error: Object.freeze({error: true}),
+    fallback: Object.freeze({fallback: true}),
+    keywords: keywordTransform,
+  }
