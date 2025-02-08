@@ -621,4 +621,6 @@ Lexer.prototype.has = function(tokenType) {
   return true
 }
 export { Lexer }
-export default Lexer
+export default {
+  compile,
+}
