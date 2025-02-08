@@ -622,5 +622,6 @@ Lexer.prototype.has = function(tokenType) {
 }
 export { Lexer }
 export default {
-  compile,
+  isRegExp, isObject, reEscape, reGroups, reCapture, reUnion, regexpOrLiteral, objectToRules, arrayToRules, ruleOptions, toRules,
+ compileRules, defaultErrorRule, checkStateGroup, compileStates, keywordTransform, Lexer, tokenToString, compile
 }
